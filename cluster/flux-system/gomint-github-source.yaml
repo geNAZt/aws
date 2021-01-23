@@ -1,0 +1,15 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: gomint
+  namespace: flux-system
+spec:
+  interval: 30s
+  ref:
+    branch: master
+  ignore: |
+    # exclude all
+    /*
+    # include deploy dir
+    !/cluster
+  url: https://github.com/gomint/aws
