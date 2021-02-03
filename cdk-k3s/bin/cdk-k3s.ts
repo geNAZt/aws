@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import * as cdk from '@aws-cdk/core';
 import * as ec2 from '@aws-cdk/aws-ec2';
+import {BlockDeviceVolume, EbsDeviceVolumeType} from '@aws-cdk/aws-ec2';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as cr from '@aws-cdk/custom-resources';
@@ -70,6 +71,15 @@ const instanceType = ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize
 const k3scontrolplane = new ec2.Instance(stack, 'master-ec2', {
   instanceType: instanceType,
   machineImage: ami,
+  blockDevices: [
+    {
+      deviceName: "/dev/sda1",
+      mappingEnabled: true,
+      volume: BlockDeviceVolume.ebs(8, {
+        volumeType: EbsDeviceVolumeType.GP3
+      })
+    }
+  ],
   vpc,
   vpcSubnets: {
     subnets: vpc.publicSubnets,
@@ -114,6 +124,15 @@ const workerAsg = new autoscaling.AutoScalingGroup(stack, 'WorkerAsg', {
   vpcSubnets: {
     subnetType: ec2.SubnetType.PUBLIC,
   },
+  blockDevices: [
+    {
+      deviceName: "/dev/sda1",
+      mappingEnabled: true,
+      volume: autoscaling.BlockDeviceVolume.ebs(8, {
+        volumeType: autoscaling.EbsDeviceVolumeType.GP3
+      })
+    }
+  ],
   minCapacity: 3,
 });
 
