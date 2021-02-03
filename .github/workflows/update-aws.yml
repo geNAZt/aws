@@ -8,9 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Install typescript CDK
-        run: npm install
-        with:
-          working-directory: 'cdk-k3s'
+        run: cd cdk-k3s && npm install
       - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v2
         with:
