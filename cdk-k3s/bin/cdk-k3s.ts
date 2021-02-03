@@ -73,7 +73,7 @@ const k3scontrolplane = new ec2.Instance(stack, 'master-ec2', {
   machineImage: ami,
   blockDevices: [
     {
-      deviceName: "/dev/sda1",
+      deviceName: "/dev/xvda",
       mappingEnabled: true,
       volume: BlockDeviceVolume.ebs(8, {
         volumeType: EbsDeviceVolumeType.GP3
@@ -135,8 +135,8 @@ const lt = new ec2.CfnLaunchTemplate(stack, 'WorkerLaunchTemplate', {
     instanceType: instanceType.toString(),
     blockDeviceMappings: [
       {
-        deviceName: "/dev/sda1",
-        noDevice: "/dev/sda1",
+        deviceName: "/dev/xvda",
+        noDevice: "/dev/xvda",
         ebs: {
           deleteOnTermination: true,
           volumeSize: 8,
