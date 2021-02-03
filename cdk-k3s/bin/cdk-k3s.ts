@@ -124,15 +124,6 @@ const workerAsg = new autoscaling.AutoScalingGroup(stack, 'WorkerAsg', {
   vpcSubnets: {
     subnetType: ec2.SubnetType.PUBLIC,
   },
-  blockDevices: [
-    {
-      deviceName: "/dev/sda1",
-      mappingEnabled: true,
-      volume: autoscaling.BlockDeviceVolume.ebs(8, {
-        volumeType: autoscaling.EbsDeviceVolumeType.GP3
-      })
-    }
-  ],
   minCapacity: 3,
 });
 
@@ -142,6 +133,17 @@ const lt = new ec2.CfnLaunchTemplate(stack, 'WorkerLaunchTemplate', {
   launchTemplateData: {
     imageId: ami.getImage(stack).imageId,
     instanceType: instanceType.toString(),
+    blockDeviceMappings: [
+      {
+        deviceName: "/dev/sda1",
+        noDevice: "/dev/sda1",
+        ebs: {
+          deleteOnTermination: true,
+          volumeSize: 8,
+          volumeType: "gp3"
+        }
+      }
+    ],
     instanceMarketOptions: {
       marketType: 'spot',
       spotOptions: {
