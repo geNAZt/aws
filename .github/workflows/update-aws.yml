@@ -7,6 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Install typescript CDK
+        run: npm install
+        with:
+          working-directory: 'cdk-k3s'
       - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v2
         with:
