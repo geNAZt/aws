@@ -6,6 +6,7 @@ jobs:
   aws_cdk:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
       - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v2
         with:
@@ -21,7 +22,7 @@ jobs:
         uses: youyo/aws-cdk-github-actions@v2
         with:
           cdk_subcommand: 'deploy'
-          cdk_stack: 'stack1'
+          cdk_stack: 'k3sCluster'
           cdk_args: '--require-approval never'
           cdk_version: '1.16.2'
           working_dir: 'cdk-k3s'
