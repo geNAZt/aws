@@ -19,7 +19,7 @@ const env = {
 const stack = new cdk.Stack(app, 'k3sCluster', { env })
 
 // VPC for all k3s resources
-const vpc = new ec2.Vpc(stack, 'Vpc', { maxAzs: 3, natGateways: 1 });
+const vpc = new ec2.Vpc(stack, 'Vpc', { maxAzs: 3, natGateways: 0 });
 
 // S3 bucket to host K3s token + kubeconfig file
 const k3sBucket = new s3.Bucket(stack, 'k3sBucket', {
