@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Install CDK and typescript
-        run: mkdir /home/runner/.npm-global && npm install typescript && npm install -g aws-cdk
+        run: mkdir /home/runner/.npm-global && npm install typescript && npm install -g aws-cdk && cd cdk-k3s/ && npm install
         env:
           NPM_CONFIG_PREFIX: /home/runner/.npm-global
       - name: Show diff
