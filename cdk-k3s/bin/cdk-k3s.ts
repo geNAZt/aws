@@ -91,7 +91,7 @@ k3scontrolplane.addUserData(`
        #!/bin/bash
        curl -L -o k3s https://github.com/k3s-io/k3s/releases/download/v1.21.5%2Bk3s2/k3s-arm64
        chmod +x k3s
-       ./k3s server &
+       ./k3s server --disable traefik --disable servicelb --disable local-storage &
        sleep 30
        ENDPOINT=$(curl http://169.254.169.254/latest/meta-data/public-hostname) 
        cp /etc/rancher/k3s/k3s.yaml /etc/rancher/k3s/k3s.yaml
