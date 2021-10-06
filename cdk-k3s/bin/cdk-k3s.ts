@@ -89,7 +89,7 @@ const k3scontrolplane = new ec2.Instance(stack, 'master-ec2', {
 });
 k3scontrolplane.addUserData(`
        #!/bin/bash
-       curl -L -o k3s https://github.com/k3s-io/k3s/releases/download/v1.19.7%2Bk3s1/k3s-arm64
+       curl -L -o k3s https://github.com/k3s-io/k3s/releases/download/v1.21.5%2Bk3s2/k3s-arm64
        chmod +x k3s
        ./k3s server &
        sleep 30
@@ -108,7 +108,7 @@ const userData = ec2.UserData.forLinux();
 userData.addCommands(`
           #!/bin/bash
           LOGFILE='/var/log/k3s.log'
-          curl -L -o k3s https://github.com/k3s-io/k3s/releases/download/v1.19.7%2Bk3s1/k3s-arm64
+          curl -L -o k3s https://github.com/k3s-io/k3s/releases/download/v1.21.5%2Bk3s2/k3s-arm64
           chmod +x k3s
           echo the bucket name is ${k3sBucket.bucketName} 
           aws s3 cp s3://${k3sBucket.bucketName}/node-token /node-token 
