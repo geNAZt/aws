@@ -176,5 +176,5 @@ k3sBucket.grantRead(workerAsg.role);
 // endpoint info
 new cdk.CfnOutput(stack, 'Endpoint', { value: `https://${k3scontrolplane.instancePublicIp}:6443` });
 // kubeconfig.yaml path
-new cdk.CfnOutput(stack, 'Kubernetes configuration file', { value: `s3://${k3sBucket.bucketName}/kubeconfig.yaml` });
+new cdk.CfnOutput(stack, 'Kubernetes configuration file', { value: `s3://${k3sBucket.bucketName}/k3s.yaml` });
 workerAsg.node.addDependency(k3scontrolplane);
