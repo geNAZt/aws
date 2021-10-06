@@ -5,6 +5,7 @@ on:
 jobs:
   aws_cdk:
     runs-on: ubuntu-latest
+    environment: AWS
     steps:
       - uses: actions/checkout@v1
       - name: Install CDK and typescript
@@ -14,14 +15,10 @@ jobs:
       - name: Show diff
         run: cd cdk-k3s/ && /home/runner/.npm-global/bin/cdk diff
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: 'eu-central-1'
           NPM_CONFIG_PREFIX: /home/runner/.npm-global
       - name: Deploy changes to AWS
         run: cd cdk-k3s/ && /home/runner/.npm-global/bin/cdk deploy --require-approval never
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: 'eu-central-1'
           NPM_CONFIG_PREFIX: /home/runner/.npm-global
