@@ -1,0 +1,3 @@
+resources:
+- flux-system/install.yml
+- flux-system/genazt-github-source.yml

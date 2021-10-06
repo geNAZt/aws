@@ -1,7 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
-  name: gomint
+  name: genazt-aws
   namespace: flux-system
 spec:
   interval: 30s
@@ -12,4 +12,4 @@ spec:
     /*
     # include deploy dir
     !/cluster
-  url: https://github.com/gomint/aws
+  url: https://github.com/geNAZt/aws

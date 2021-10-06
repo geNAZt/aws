@@ -1,0 +1,18 @@
+on:
+  push:
+    branches:
+      - master
+jobs:
+  aws_cdk:
+    runs-on: ubuntu-latest
+    environment: AWS
+    steps:
+      - uses: actions/checkout@v1
+      - name: Get k3s config from S3
+        run: aws s3 co $(aws cloudformation describe-stacks --stack-name k3sCluster | jq '.Stacks[].Outputs[] | select(.OutputKey == "Kubernetesconfigurationfile") | .OutputValue' -r) kube.yml
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-central-1'
+      - name: Install cluster software
+        run: kubectl --kubeconfig kube.yml apply -f cluster/flux-system/install.yml && kubectl --kubeconfig kube.yml apply -f cluster/flux-system/genazt-github-source.yml && kubectl --kubeconfig kube.yml apply -f cluster/cluster.yml
